@@ -3,6 +3,7 @@ import { createLogger, transports, format } from 'winston'
 import { WinstonModule, utilities } from 'nest-winston'
 import 'winston-daily-rotate-file'
 import { AppModule } from './app.module'
+import { ValidationPipe } from '@nestjs/common'
 
 declare const module: any
 
@@ -34,6 +35,14 @@ async function bootstrap() {
   })
 
   app.setGlobalPrefix('/api/v1')
+
+  // 全局管道
+  app.useGlobalPipes(
+    // 校验字段
+    new ValidationPipe({
+      whitelist: true
+    })
+  )
 
   await app.listen(3000)
 
