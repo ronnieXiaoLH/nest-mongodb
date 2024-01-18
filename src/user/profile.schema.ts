@@ -1,6 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { ProfileSchema } from './profile.schema'
-import { RolesSchema } from 'src/roles/roles.schema'
 
 @Schema({
   timestamps: true, // 自动添加 createdAt 和 updatedAt 字段
@@ -13,26 +11,22 @@ import { RolesSchema } from 'src/roles/roles.schema'
     }
   }
 })
-export class User {
+export class Profile {
   @Prop({
-    type: String,
-    unique: true,
-    required: true
+    type: Number,
+    enum: [0 | 1] // 男的 0，女的 1
   })
-  username: string
-
-  @Prop({ type: String, required: true })
-  password: string
+  gender: number
 
   @Prop({
-    type: ProfileSchema
+    type: String
   })
-  profile
+  photo: string
 
   @Prop({
-    type: [RolesSchema]
+    type: String
   })
-  roles
+  address: string
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export const ProfileSchema = SchemaFactory.createForClass(Profile)

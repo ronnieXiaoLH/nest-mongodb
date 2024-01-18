@@ -3,6 +3,7 @@ import { UserModule } from './user/user.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { configEnum } from './enum/config.enum'
+import { RolesModule } from './roles/roles.module';
 
 @Global()
 @Module({
@@ -19,7 +20,8 @@ import { configEnum } from './enum/config.enum'
         uri: `mongodb://${configService.get(configEnum.DB_HOST)}:${configService.get(configEnum.DB_PORT)}/nest-demo`
       })
     }),
-    UserModule
+    UserModule,
+    RolesModule
   ],
   controllers: [],
   providers: [Logger],
