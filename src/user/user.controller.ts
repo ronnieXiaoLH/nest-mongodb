@@ -28,7 +28,7 @@ export class UserController {
     private logger: Logger
   ) {}
 
-  @UseGuards(AdminGuard)
+  @UseGuards(JwtGuard, AdminGuard)
   @Get()
   getUsers(@Query() query: any) {
     this.logger.log('get users')
