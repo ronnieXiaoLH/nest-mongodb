@@ -1,4 +1,9 @@
 export enum configEnum {
   DB_HOST = 'DB_HOST',
-  DB_PORT = 'DB_PORT'
+  DB_PORT = 'DB_PORT',
+  DISCOVER_URL = 'DISCOVER_URL',
+  APP_ID = 'APP_ID',
+  APP_SECRET = 'APP_SECRET',
+  CALLBACK_URL = 'CALLBACK_URL',
+  SUCCESS_URL = 'SUCCESS_URL'
 }

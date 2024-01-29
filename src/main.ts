@@ -38,8 +38,8 @@ async function bootstrap() {
   app.setGlobalPrefix('/api/v1')
 
   // 全局过滤器只能有一个
-  const httpAdapterHost = app.get(HttpAdapterHost)
-  app.useGlobalFilters(new AllExceptionFilter(logger, httpAdapterHost))
+  // const httpAdapterHost = app.get(HttpAdapterHost)
+  // app.useGlobalFilters(new AllExceptionFilter(logger, httpAdapterHost))
 
   // 全局管道
   app.useGlobalPipes(

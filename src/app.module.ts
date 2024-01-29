@@ -1,10 +1,18 @@
-import { Global, Logger, Module } from '@nestjs/common'
+import {
+  Global,
+  Logger,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod
+} from '@nestjs/common'
 import { UserModule } from './user/user.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { configEnum } from './enum/config.enum'
-import { RolesModule } from './roles/roles.module';
-import { AuthModule } from './auth/auth.module';
+import { RolesModule } from './roles/roles.module'
+import { AuthModule } from './auth/auth.module'
+import { OidcMiddleware } from './middlewares/oidc.middleware'
 
 @Global()
 @Module({
@@ -29,4 +37,17 @@ import { AuthModule } from './auth/auth.module';
   providers: [Logger],
   exports: [Logger]
 })
-export class AppModule {}
+// export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(OidcMiddleware).forRoutes({
+      path: '/user/oidc',
+      method: RequestMethod.GET
+    })
+
+    consumer.apply(OidcMiddleware).forRoutes({
+      path: '/user/oidc/callback',
+      method: RequestMethod.GET
+    })
+  }
+}
