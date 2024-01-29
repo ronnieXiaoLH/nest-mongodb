@@ -1,9 +1,10 @@
-import { NestFactory } from '@nestjs/core'
+import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { createLogger, transports, format } from 'winston'
 import { WinstonModule, utilities } from 'nest-winston'
 import 'winston-daily-rotate-file'
 import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
+import { AllExceptionFilter } from './filters/all-exception.filter'
 
 declare const module: any
 
@@ -35,6 +36,10 @@ async function bootstrap() {
   })
 
   app.setGlobalPrefix('/api/v1')
+
+  // 全局过滤器只能有一个
+  const httpAdapterHost = app.get(HttpAdapterHost)
+  app.useGlobalFilters(new AllExceptionFilter(logger, httpAdapterHost))
 
   // 全局管道
   app.useGlobalPipes(
