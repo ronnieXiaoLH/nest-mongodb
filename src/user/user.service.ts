@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectConnection, InjectModel } from '@nestjs/mongoose'
 import { Connection, Model } from 'mongoose'
+import * as argon2 from 'argon2'
 import { User } from './user.schema'
 import { Roles } from 'src/roles/roles.schema'
 
@@ -21,7 +22,14 @@ export class UserService {
     return this.userModel.find(query)
   }
 
-  create(user: Partial<User>) {
+  async findOne(query: any) {
+    return this.userModel.findOne(query)
+  }
+
+  async create(user: Partial<User>) {
+    // 加密用户的密码
+    user.password = await argon2.hash(user.password)
+
     return this.userModel.create(user)
   }
 

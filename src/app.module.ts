@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { configEnum } from './enum/config.enum'
 import { RolesModule } from './roles/roles.module';
+import { AuthModule } from './auth/auth.module';
 
 @Global()
 @Module({
@@ -21,7 +22,8 @@ import { RolesModule } from './roles/roles.module';
       })
     }),
     UserModule,
-    RolesModule
+    RolesModule,
+    AuthModule
   ],
   controllers: [],
   providers: [Logger],
